@@ -146,19 +146,21 @@ public class LongestZigZagSubsequence {
 		// Explicitly check for base case here
 		if(array.length <= 0)
 			return 0;
+		if(array.length == 1)
+			return 1;
 
 		// Create the cache array of length N-1 to store the differences
-		int[] cache = new int[array.length];
+		int[] cache = new int[array.length - 1];
 
 		// Iteratively compute the difference between adjacent numbers and encode it into the cache array
 		for(int i = 1; i < array.length; i++) {
 			int diff = array[i] - array[i-1];
 			if(diff > 0)
-				cache[i] = 1;
+				cache[i-1] = 1;
 			else if(diff < 0)
-				cache[i] = -1;
+				cache[i-1] = -1;
 			else if(diff == 0)
-				cache[i] = 0;
+				cache[i-1] = 0;
 		}
 
 		// From the cache array find the longest run of alternating 1s and -1s
