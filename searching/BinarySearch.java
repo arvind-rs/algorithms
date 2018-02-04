@@ -1,32 +1,48 @@
+
+/*
+ * A simple java implementation to the Binary Search Algorithm
+ * @author: ArvindRS
+ * @date: 07/13/2017
+ */
+
 import java.util.*;
 
 public class BinarySearch {
-
 	public static void main(String[] args) {
-
-		int[] test1 = randomArrayGenerator(100);
-		int k = 6;
+		// Test cases
+		int[] test1 = getRandomInputArray(10);
 
 		Arrays.sort(test1);
 
-		System.out.println(Arrays.toString(test1));
-		System.out.println(k);
-		System.out.println(search(test1,0,test1.length - 1,k));
+		// Solution
+		System.out.println(search(test1,6));
 	}
 
-	public static int[] randomArrayGenerator(int size) {
+	public static int search(int[] input, int k) {
+		// Check for edge cases
+		if(input.length <= 0) return -1;
 
+		System.out.println(Arrays.toString(input));
+		System.out.println(k);
+
+		int lo = 0;
+		int hi = input.length - 1;
+
+		while(lo <= hi) {
+			int mid = lo + (hi - lo) / 2; // To avoid integer overflow
+			if(input[mid] == k) return mid;
+			else if(input[mid] > k) hi = mid;
+			else lo = mid;
+		}
+
+		// Didn't find the element
+		return -1;
+	}
+
+	public static int[] getRandomInputArray(int size) {
 		int[] arr = new int[size];
-		for(int i = 0; i < size; i++)
+		for(int i = 0; i < arr.length; i++)
 			arr[i] = (int)(Math.random() * size + 1);
 		return arr;
-	}
-
-	public static int search(int[] array,int lo, int hi,int key) {
-
-		int mid = lo + (hi - lo) / 2;
-		if(array[mid] == key) return mid;
-		else if(key < array[mid]) return search(array,lo,mid,key);
-		else return search(array,mid+1,hi,key);
 	}
 }
